@@ -1,0 +1,218 @@
+[gd_scene load_steps=11 format=3 uid="uid://cabr002sdouvf"]
+
+[ext_resource type="Script" path="res://scenes/games/notWorms/notWorms.gd" id="1_ydmjt"]
+[ext_resource type="PackedScene" uid="uid://bbeqyii41yy25" path="res://scenes/games/notWorms/Entities/dirt.tscn" id="3_m744f"]
+[ext_resource type="Texture2D" uid="uid://crr2d6qa7d6ik" path="res://scenes/games/notWorms/assets/images/wave.png" id="3_t88ic"]
+[ext_resource type="Texture2D" uid="uid://bn18nkyv33s5a" path="res://scenes/games/notWorms/assets/images/9patch.png" id="4_5xtc3"]
+[ext_resource type="Texture2D" uid="uid://boyjilr58q7ks" path="res://scenes/games/notWorms/assets/images/wind9patch.png" id="5_xi5k8"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2nncq"]
+seed = 1294967930
+frequency = 0.004
+fractal_octaves = 3
+fractal_gain = 0.25
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hdmjw"]
+seed = 1193229933
+frequency = 0.008
+fractal_octaves = 10
+fractal_lacunarity = 1.0
+fractal_gain = 0.75
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8xn6w"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ym3dx"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_etwcg"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_ydmjt")
+noise = SubResource("FastNoiseLite_2nncq")
+surfacenoise = SubResource("FastNoiseLite_hdmjw")
+
+[node name="water" type="Node" parent="."]
+
+[node name="back1" type="Sprite2D" parent="water"]
+position = Vector2(141.26, 1067.06)
+scale = Vector2(1.25, 0.15)
+texture = ExtResource("3_t88ic")
+flip_v = true
+
+[node name="back2" type="Sprite2D" parent="water"]
+position = Vector2(472.322, 812.666)
+scale = Vector2(1.25, 0.15)
+texture = ExtResource("3_t88ic")
+flip_h = true
+flip_v = true
+
+[node name="front1" type="Sprite2D" parent="water"]
+z_index = 1
+position = Vector2(577.447, 899.632)
+scale = Vector2(1.25, 0.15)
+texture = ExtResource("3_t88ic")
+flip_v = true
+
+[node name="front2" type="Sprite2D" parent="water"]
+z_index = 1
+position = Vector2(439.521, 751.097)
+scale = Vector2(1.25, 0.15)
+texture = ExtResource("3_t88ic")
+flip_h = true
+flip_v = true
+
+[node name="ground" type="Node" parent="."]
+
+[node name="TileMap" parent="ground" instance=ExtResource("3_m744f")]
+script = null
+
+[node name="players" type="Node" parent="."]
+
+[node name="projectiles" type="Node" parent="."]
+
+[node name="ui" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ui"]
+offset_right = 143.0
+offset_bottom = 66.0
+
+[node name="Button" type="Button" parent="ui/VBoxContainer"]
+layout_mode = 2
+text = "spawn worm"
+
+[node name="Button2" type="Button" parent="ui/VBoxContainer"]
+layout_mode = 2
+text = "refresh landmass
+"
+
+[node name="WindBarRight" type="TextureProgressBar" parent="ui"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_right = 100.0
+offset_bottom = 30.0
+grow_horizontal = 2
+rounded = true
+nine_patch_stretch = true
+stretch_margin_left = 2
+stretch_margin_top = 2
+stretch_margin_right = 2
+stretch_margin_bottom = 2
+texture_under = ExtResource("4_5xtc3")
+texture_progress = ExtResource("5_xi5k8")
+tint_under = Color(0.190762, 0.190762, 0.190762, 1)
+tint_progress = Color(0.654401, 0.00375343, 0.970806, 1)
+
+[node name="WindBarLeft" type="TextureProgressBar" parent="ui"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 30.0
+offset_right = 100.0
+offset_bottom = 60.0
+grow_horizontal = 2
+rotation = 3.14159
+rounded = true
+nine_patch_stretch = true
+stretch_margin_left = 2
+stretch_margin_top = 2
+stretch_margin_right = 2
+stretch_margin_bottom = 2
+texture_under = ExtResource("4_5xtc3")
+texture_progress = ExtResource("5_xi5k8")
+tint_under = Color(0.192157, 0.192157, 0.192157, 1)
+tint_progress = Color(0.624656, 0.00360307, 0.943339, 1)
+
+[node name="notifback" type="ColorRect" parent="ui"]
+visible = false
+offset_left = 450.0
+offset_top = 40.0
+offset_right = 700.0
+offset_bottom = 65.0
+color = Color(0.168627, 0.168627, 0.168627, 0.239216)
+
+[node name="Label" type="Label" parent="ui"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -126.0
+offset_top = 40.0
+offset_right = 124.0
+offset_bottom = 65.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 8
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="ui"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -252.0
+offset_right = -2.0
+offset_bottom = 155.0
+grow_horizontal = 0
+color = Color(0.168627, 0.168627, 0.168627, 0.239216)
+
+[node name="Label2" type="Label" parent="ui"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -252.0
+offset_right = -2.0
+offset_bottom = 155.0
+grow_horizontal = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 8
+text = "Spawn in: !join
+Move: !<direction> <time>
+e.g. !l 0.1 or !r 2
+Jump: !j
+Fire: !f <angle> <power>
+e.g. !f 45 80"
+horizontal_alignment = 1
+
+[node name="deathzone" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="deathzone"]
+position = Vector2(576, 656)
+shape = SubResource("WorldBoundaryShape2D_8xn6w")
+debug_color = Color(0.84868, 0.00091949, 0.903118, 0.42)
+
+[node name="walldeath" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walldeath"]
+position = Vector2(-15, 319)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_ym3dx")
+debug_color = Color(0.795817, 0.177411, 0.932376, 0.42)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="walldeath"]
+position = Vector2(1165, 335)
+rotation = -1.5708
+shape = SubResource("WorldBoundaryShape2D_etwcg")
+debug_color = Color(0.832987, 0.00135382, 0.938776, 0.42)
+
+[node name="WindTimer" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+
+[node name="NotifTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="pressed" from="ui/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ui/VBoxContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="body_entered" from="deathzone" to="." method="_on_deathzone_body_entered"]
+[connection signal="body_entered" from="walldeath" to="." method="_on_walldeath_body_entered"]
+[connection signal="timeout" from="WindTimer" to="." method="_on_wind_timer_timeout"]
+[connection signal="timeout" from="NotifTimer" to="." method="_on_notif_timer_timeout"]
+
+[editable path="ground/TileMap"]
