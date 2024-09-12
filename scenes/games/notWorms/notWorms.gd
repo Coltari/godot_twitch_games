@@ -144,6 +144,9 @@ func player_join(cmd_info : CommandInfo) -> void:
 
 func player_fire(cmd_info : CommandInfo, arg_arr : PackedStringArray) -> void:
 	var player = get_player(cmd_info)
+	if !player:
+		spawn_worm(cmd_info.sender_data.tags["display-name"])
+		return
 	var angle: float = float(arg_arr[0])
 	var power: float = float(arg_arr[1])
 	#is valid command?
@@ -156,6 +159,9 @@ func player_fire(cmd_info : CommandInfo, arg_arr : PackedStringArray) -> void:
 
 func player_moveleft(cmd_info : CommandInfo, arg_arr : PackedStringArray) -> void:
 	var player = get_player(cmd_info)
+	if !player:
+		spawn_worm(cmd_info.sender_data.tags["display-name"])
+		return
 	var time: float = float(arg_arr[0])
 	#is valid command?
 	if not time:
@@ -165,6 +171,9 @@ func player_moveleft(cmd_info : CommandInfo, arg_arr : PackedStringArray) -> voi
 
 func player_moveright(cmd_info : CommandInfo, arg_arr : PackedStringArray) -> void:
 	var player = get_player(cmd_info)
+	if !player:
+		spawn_worm(cmd_info.sender_data.tags["display-name"])
+		return
 	var time: float = float(arg_arr[0])
 	#is valid command?
 	if not time:
@@ -174,6 +183,9 @@ func player_moveright(cmd_info : CommandInfo, arg_arr : PackedStringArray) -> vo
 
 func player_jump(cmd_info : CommandInfo) -> void:
 	var player = get_player(cmd_info)
+	if !player:
+		spawn_worm(cmd_info.sender_data.tags["display-name"])
+		return
 	player.jump()
 
 func generate_level() -> void:
