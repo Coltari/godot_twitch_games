@@ -263,6 +263,8 @@ func _on_deathzone_body_entered(body):
 	if body.is_in_group("Worm"):
 		notifications.append(body.PlayerName + " is swimming with the fishies")
 		body.queue_free()
+	if body.is_in_group("Rocket"):
+		body.queue_free()
 
 
 func _on_button_pressed():
@@ -296,6 +298,8 @@ func _on_walldeath_body_entered(body):
 		#dish out points
 	if body.is_in_group("Worm"):
 		notifications.append(body.PlayerName + " fell out of the world")
+		body.queue_free()
+	if body.is_in_group("Rocket"):
 		body.queue_free()
 
 func _on_notif_timer_timeout():
