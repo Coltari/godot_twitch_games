@@ -20,7 +20,7 @@ size = Vector2(3, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fh3dk"]
 size = Vector2(5, 10)
 
-[node name="Rocket" type="RigidBody2D"]
+[node name="Rocket" type="RigidBody2D" groups=["Rocket"]]
 position = Vector2(0, -5)
 collision_layer = 4
 script = ExtResource("1_f14mt")
@@ -29,7 +29,7 @@ script = ExtResource("1_f14mt")
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_f0fsx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["Rocket"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_hpiny")
 
