@@ -16,7 +16,7 @@ func update(_delta):
 func fire(angle, thrust):
 	var r = owner.ROCKET.instantiate()
 	owner.weapon.rotation = angle
-	r.position = owner.weapon.muzzle.global_position 
+	r.global_position = owner.weapon.muzzle.global_position 
 	r.firingdata(angle,thrust)
 	#2 seconds is 100%
 	#1000 thrust is 100%

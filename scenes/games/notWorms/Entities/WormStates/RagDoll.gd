@@ -2,6 +2,7 @@ extends State
 
 var explosionforce : Vector2 = Vector2.ZERO
 var falltime : float
+var previouspos : Vector2
 
 func enter(values := {}):
 	var val = values.get("force")
@@ -11,6 +12,7 @@ func enter(values := {}):
 		owner.sprite.play("falling")
 
 func physics_update(delta):
+	previouspos = owner.position
 	#apply gravity
 	owner.velocity.y += owner.gravity * delta
 	#lerp velocity to 0
@@ -27,6 +29,9 @@ func physics_update(delta):
 		falltime = 0.0
 	#if on floor still - exit ragdoll state to idle.
 	if owner.velocity.x == 0 and (owner.velocity.y > -6 and owner.velocity.y < -4):
+		state_machine.transition_to("Idle")
+	#if we haven't moved, then go idle.
+	if owner.position == previouspos:
 		state_machine.transition_to("Idle")
 
 func update(delta):

@@ -84,12 +84,10 @@ sprite_frames = SubResource("SpriteFrames_y7vx3")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_y870d")
 
-[node name="Weapon" parent="." instance=ExtResource("11_qmdrf")]
-visible = false
-script = null
-
 [node name="MovementTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="Weapon" parent="." instance=ExtResource("11_qmdrf")]
 
 [node name="Label" type="Label" parent="."]
 offset_left = -75.0

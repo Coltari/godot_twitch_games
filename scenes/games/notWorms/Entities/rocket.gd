@@ -7,18 +7,24 @@ const EXPLODE = preload("res://scenes/games/notWorms/Entities/explode.tscn")
 @onready var area_2d = $Area2D
 
 var wind : Vector2 = Vector2.ZERO
+var vImpulse : float
+var vAngle : float
 signal add_explosion(explosion)
 
 func firingdata(angle, impulse):
-	#rotation_degrees = angle
-	apply_central_impulse(Vector2(0,impulse).rotated(angle))
+	vImpulse = impulse
+	vAngle = angle
+
+func _ready() -> void:
+	apply_central_impulse(Vector2(0,vImpulse).rotated(vAngle))
 
 func _on_area_2d_body_entered(_body):
-	#explode
-	var e = EXPLODE.instantiate()
-	e.position = self.position
-	add_explosion.emit(e)
-	queue_free()
+	if _body.is_in_group("Worm") || _body.is_in_group("ground"):
+		#explode
+		var e = EXPLODE.instantiate()
+		e.position = self.position
+		add_explosion.emit(e)
+		queue_free()
 
 func update_wind(newValue):
 	wind = newValue

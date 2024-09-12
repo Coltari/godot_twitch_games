@@ -16,7 +16,7 @@ func _on_gpu_particles_2d_finished():
 
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("ground"):
-		if body is TileMap:
+		if body is TileMapLayer:
 			remove_cell.emit(self.global_position, 50)
 	else:
 		if body.has_method("knock_back"):
