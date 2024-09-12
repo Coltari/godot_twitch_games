@@ -1,4 +1,7 @@
 extends State
 
 func enter(_msg := {}) -> void:
-	queue_free()
+	pass
+
+func update(_delta) -> void:
+	owner.queue_free()

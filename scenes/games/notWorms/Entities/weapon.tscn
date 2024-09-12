@@ -22,7 +22,7 @@ sprite_frames = SubResource("SpriteFrames_iga2b")
 script = ExtResource("2_5wgbg")
 
 [node name="Muzzle" type="Marker2D" parent="."]
-position = Vector2(-2.97222, 14.0059)
+position = Vector2(-2.972, 20)
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="."]
 offset_left = 4.01586
