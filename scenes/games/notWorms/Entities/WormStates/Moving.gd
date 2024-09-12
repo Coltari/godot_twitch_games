@@ -1,6 +1,6 @@
 extends State
 
-func enter(values := {}):
+func enter(values := {}) -> void:
 	var dir = values.get("direction")
 	var time = values.get("time")
 	
@@ -16,11 +16,11 @@ func enter(values := {}):
 	owner.movement_timer.start()
 	owner.sprite.play("default")
 
-func update(_delta):
+func update(_delta) -> void:
 	if !owner.is_on_floor():
 		state_machine.transition_to("Falling")
 
-func physics_update(_delta):
+func physics_update(_delta) -> void:
 	if owner.moving:
 		owner.velocity.x = owner.direction * owner.SPEED
 	else:

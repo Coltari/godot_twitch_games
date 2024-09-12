@@ -1,4 +1,4 @@
 extends State
 
-func enter(_msg := {}):
+func enter(_msg := {}) -> void:
 	queue_free()

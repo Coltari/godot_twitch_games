@@ -31,7 +31,7 @@ var notifications = []
 var wind : Vector2
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	#setDetails()
 	setWaterLevel()
 	get_viewport().transparent_bg = true
@@ -58,7 +58,7 @@ func _ready():
 	
 	Transition.hide_transition()
 
-func setWaterLevel():
+func setWaterLevel() -> void:
 	for c in water.get_children():
 		if c.get_name() == "back1":
 			c.position.y = 1020
@@ -73,26 +73,26 @@ func setWaterLevel():
 			c.position.y = 1080
 			c.position.x = 900
 
-func add_explosion(explosion):
+func add_explosion(explosion) -> void:
 	call_deferred("add_child",explosion)
 	explosion.remove_cell.connect(handle_explosion)
 	#add_child(explosion)
 
-func handle_explosion(explode_global_pos,radius):
+func handle_explosion(explode_global_pos,radius) -> void:
 	tile_map.explode_tile_at(explode_global_pos,radius)
 
-func add_rocket(rocket):
+func add_rocket(rocket) -> void:
 	projectiles.add_child(rocket)
 	rocket.add_explosion.connect(add_explosion)
 
-func get_sin(a):
+func get_sin(a) -> float:
 	return sin((time*a)*1)*0.5
 
-func get_cos(a):
+func get_cos(a) -> float:
 	return cos((time*a)*1)*0.5
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(_delta) -> void:
 	#copied from canon game region start
 	if Input.is_action_just_pressed("ui_cancel"):
 		GameConfigManager.save_config()
@@ -129,7 +129,7 @@ func _process(_delta):
 		wind_bar_left.value = 0
 		wind_bar_right.value = 0
 
-func get_player(cmd_info : CommandInfo):
+func get_player(cmd_info : CommandInfo) -> Worm:
 	var from_user = cmd_info.sender_data.tags["display-name"]
 	var player
 	for n in players.get_children():
@@ -137,12 +137,12 @@ func get_player(cmd_info : CommandInfo):
 			player = n
 	return player
 
-func player_join(cmd_info : CommandInfo):
+func player_join(cmd_info : CommandInfo) -> void:
 	var player = get_player(cmd_info)
 	if !player:
 		spawn_worm(cmd_info.sender_data.tags["display-name"])
 
-func player_fire(cmd_info : CommandInfo, arg_arr : PackedStringArray):
+func player_fire(cmd_info : CommandInfo, arg_arr : PackedStringArray) -> void:
 	var player = get_player(cmd_info)
 	var angle: float = float(arg_arr[0])
 	var power: float = float(arg_arr[1])
@@ -154,7 +154,7 @@ func player_fire(cmd_info : CommandInfo, arg_arr : PackedStringArray):
 	#fire
 	player.fire(deg_to_rad(angle+90),clampf((power*10),10,1000))
 
-func player_moveleft(cmd_info : CommandInfo, arg_arr : PackedStringArray):
+func player_moveleft(cmd_info : CommandInfo, arg_arr : PackedStringArray) -> void:
 	var player = get_player(cmd_info)
 	var time: float = float(arg_arr[0])
 	#is valid command?
@@ -163,7 +163,7 @@ func player_moveleft(cmd_info : CommandInfo, arg_arr : PackedStringArray):
 	#send to relevant player
 	player.move(-1,time)
 
-func player_moveright(cmd_info : CommandInfo, arg_arr : PackedStringArray):
+func player_moveright(cmd_info : CommandInfo, arg_arr : PackedStringArray) -> void:
 	var player = get_player(cmd_info)
 	var time: float = float(arg_arr[0])
 	#is valid command?
@@ -172,11 +172,11 @@ func player_moveright(cmd_info : CommandInfo, arg_arr : PackedStringArray):
 	#send to relevant player
 	player.move(1,time)
 
-func player_jump(cmd_info : CommandInfo):
+func player_jump(cmd_info : CommandInfo) -> void:
 	var player = get_player(cmd_info)
 	player.jump()
 
-func generate_level():
+func generate_level() -> void:
 	levelready = false
 	blockcount = 0.0
 	randomize()
@@ -204,7 +204,7 @@ func generate_level():
 	blockcount = tile_map.count_tiles()
 	levelready = true
 
-func regenerateDeadLand():
+func regenerateDeadLand() -> void:
 	if levelready:
 		var currentblockcount : float = 0.0
 		currentblockcount = tile_map.count_tiles()
@@ -235,7 +235,7 @@ func regenerateDeadLand():
 				print("spawning ", player)
 				spawn_worm(player)
 
-func spawn_worm(user):
+func spawn_worm(user) -> void:
 	for node in players.get_children():
 		if node.PlayerName == user:
 			return
@@ -258,7 +258,7 @@ func spawn_worm(user):
 	n.add_rocket.connect(add_rocket)
 	n.setName(user)
 
-func _on_deathzone_body_entered(body):
+func _on_deathzone_body_entered(body) -> void:
 	#dish out points
 	if body.is_in_group("Worm"):
 		notifications.append(body.PlayerName + " is swimming with the fishies")
@@ -266,19 +266,17 @@ func _on_deathzone_body_entered(body):
 	if body.is_in_group("Rocket"):
 		body.queue_free()
 
-
-func _on_button_pressed():
+func _on_button_pressed() -> void:
 	spawn_worm("test"+str(tcount))
 	tcount+=1
 
-
-func _on_button_2_pressed():
+func _on_button_2_pressed() -> void:
 	for n in players.get_children():
 		n.queue_free()
 	tile_map.remove_all_tiles()
 	generate_level()
 
-func aChangeInTheWind():
+func aChangeInTheWind() -> void:
 	wind_timer.wait_time = WindTimer
 	wind = Vector2(randf_range(-1,1),0)
 	var a = wind.x
@@ -290,11 +288,10 @@ func aChangeInTheWind():
 		projectile.update_wind(wind)
 	wind_timer.start()
 
-func _on_wind_timer_timeout():
+func _on_wind_timer_timeout() -> void:
 	aChangeInTheWind()
 
-
-func _on_walldeath_body_entered(body):
+func _on_walldeath_body_entered(body) -> void:
 		#dish out points
 	if body.is_in_group("Worm"):
 		notifications.append(body.PlayerName + " fell out of the world")
@@ -302,11 +299,11 @@ func _on_walldeath_body_entered(body):
 	if body.is_in_group("Rocket"):
 		body.queue_free()
 
-func _on_notif_timer_timeout():
+func _on_notif_timer_timeout() -> void:
 	label.text = ""
 	notifback.visible = false
 
-func checkForNotifications():
+func checkForNotifications() -> void:
 	if notif_timer.time_left > 0:
 		return
 	if notifications.size() > 0:

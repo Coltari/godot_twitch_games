@@ -8,13 +8,13 @@ var strength : float = 10.0
 signal remove_cell(explode_global_pos,radius)
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	gpu_particles_2d.emitting = true
 
-func _on_gpu_particles_2d_finished():
+func _on_gpu_particles_2d_finished() -> void:
 	queue_free()
 
-func _on_area_2d_body_entered(body):
+func _on_area_2d_body_entered(body) -> void:
 	if body.is_in_group("ground"):
 		if body is TileMapLayer:
 			remove_cell.emit(self.global_position, 50)

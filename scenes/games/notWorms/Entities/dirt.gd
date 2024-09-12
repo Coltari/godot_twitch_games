@@ -1,13 +1,13 @@
 extends TileMapLayer
 
-func _ready():
+func _ready() -> void:
 	pass
 
-func place_at_pos(pos:Vector2):
+func place_at_pos(pos:Vector2) -> void:
 	var coords = to_local(pos)
 	set_cell(local_to_map(coords),0,Vector2i(0,0),0)
 
-func update_tile_at(pos:Vector2i):
+func update_tile_at(pos:Vector2i) -> void:
 	if get_cell_source_id(Vector2i(pos.x,pos.y)) == -1:
 		return
 	#check tiles around this one - update which tile we've set based on that
@@ -51,7 +51,7 @@ func update_tile_at(pos:Vector2i):
 	else:
 		set_cell(Vector2i(pos.x,pos.y),0,Vector2i(0,0),0)
 
-func explode_tile_at(global_pos,radius):
+func explode_tile_at(global_pos,radius) -> void:
 	var xstart : int = int(global_pos.x)-radius
 	var ystart : int = int(global_pos.y)-radius
 	var xend : int = int(global_pos.x)+radius
@@ -64,26 +64,26 @@ func explode_tile_at(global_pos,radius):
 				var coords = to_local(pos)
 				erase_cell(local_to_map(coords))
 
-func is_tile_here(pos:Vector2):
+func is_tile_here(pos:Vector2) -> bool:
 	var coord = to_local(pos)
 	if get_cell_source_id(local_to_map(coord)) == -1:
 		return false
 	else:
 		return true
 
-func remove_all_tiles():
+func remove_all_tiles() -> void:
 	var rect = get_used_rect()
 	for x in rect.end.x:
 		for y in rect.end.y:
 			erase_cell(Vector2i(x,y))
 
-func update_all_tiles():
+func update_all_tiles() -> void:
 	var rect = get_used_rect()
 	for x in rect.end.x:
 		for y in rect.end.y:
 			update_tile_at(Vector2i(x,y))
 
-func count_tiles():
+func count_tiles() -> float:
 	var rect = get_used_rect()
 	var count : float = 0.0
 	for x in rect.end.x:

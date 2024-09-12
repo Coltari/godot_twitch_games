@@ -1,3 +1,4 @@
+class_name Worm
 extends CharacterBody2D
 
 @export var PlayerName : String = ""
@@ -28,7 +29,7 @@ var damaccum : int = 0
 
 signal add_rocket(rocket)
 
-func _ready():
+func _ready() -> void:
 	health_bar.value = health
 	var f = randi_range(0,1)
 	if f == 0: 
@@ -38,17 +39,17 @@ func _ready():
 		facing = facingDirection.RIGHT
 		weapon.rotation_degrees = 270
 
-func checksprite():
+func checksprite() -> void:
 	if facing == facingDirection.LEFT:
 		sprite.flip_h = false
 	else:
 		sprite.flip_h = true
 
-func setName(Pname):
+func setName(Pname) -> void:
 	label.text = Pname
 	PlayerName = Pname
 
-func _process(_delta):
+func _process(_delta) -> void:
 	checksprite()
 	if firing:
 		weapon.update_progress(50*_delta)
@@ -61,26 +62,26 @@ func _process(_delta):
 		else:
 			c.queue_free()
 
-func _physics_process(_delta):
+func _physics_process(_delta) -> void:
 	if state_machine.state != $StateMachine/RagDoll:
 		move_and_slide()
 
-func move(dir, time):
+func move(dir, time) -> void:
 	if state_machine.state.has_method("canMove"):
 		state_machine.state.canMove(dir, time)
 
-func fire(angle,thrust):
+func fire(angle,thrust) -> void:
 	if state_machine.state.has_method("canFire"):
 		state_machine.state.canFire(angle,thrust)
 
-func jump():
+func jump() -> void:
 	if state_machine.state.has_method("canJump"):
 		state_machine.state.canJump()
 
-func _on_movement_timer_timeout():
+func _on_movement_timer_timeout() -> void:
 	moving = false
 
-func takedamage():
+func takedamage() -> void:
 	if damaccum > 0:
 		health -= damaccum
 		health_bar.value = health
@@ -93,7 +94,7 @@ func takedamage():
 		damagelabels.add_child(a)
 		damaccum = 0
 
-func knock_back(source,strength,dealdamage):
+func knock_back(source,strength,dealdamage) -> void:
 	if !iframes:
 		iframes = true
 		#get distance from source

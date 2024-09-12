@@ -1,6 +1,6 @@
 extends State
 
-func enter(values := {}):
+func enter(values := {}) -> void:
 	owner.firing = true
 	owner.weapon.visible = true
 	owner.sprite.play("default")
@@ -9,11 +9,11 @@ func enter(values := {}):
 	var thrust = values.get("thrust")
 	fire(angle, thrust)
 
-func update(_delta):
+func update(_delta) -> void:
 	if !owner.firing:
 		state_machine.transition_to("Idle")
 
-func fire(angle, thrust):
+func fire(angle, thrust) -> void:
 	var r = owner.ROCKET.instantiate()
 	owner.weapon.rotation = angle
 	r.global_position = owner.weapon.muzzle.global_position 

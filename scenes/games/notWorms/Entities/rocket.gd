@@ -11,7 +11,7 @@ var vImpulse : float
 var vAngle : float
 signal add_explosion(explosion)
 
-func firingdata(angle, impulse):
+func firingdata(angle, impulse) -> void:
 	vImpulse = impulse
 	vAngle = angle
 
@@ -26,13 +26,13 @@ func _on_area_2d_body_entered(_body):
 		add_explosion.emit(e)
 		queue_free()
 
-func update_wind(newValue):
+func update_wind(newValue) -> void:
 	wind = newValue
 
-func _physics_process(_delta):
+func _physics_process(_delta) -> void:
 	apply_central_force(wind*100)
 
-func _process(_delta):
+func _process(_delta) -> void:
 	var moverotation = atan2(linear_velocity.y,linear_velocity.x) + PI /2
 	animated_sprite_2d.rotation = moverotation
 	collision_shape_2d.rotation = moverotation

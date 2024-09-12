@@ -4,14 +4,14 @@ var explosionforce : Vector2 = Vector2.ZERO
 var falltime : float
 var previouspos : Vector2
 
-func enter(values := {}):
+func enter(values := {}) -> void:
 	var val = values.get("force")
 	if val != null:
 		explosionforce = val
 		owner.velocity = explosionforce * owner.AIRSPEED
 		owner.sprite.play("falling")
 
-func physics_update(delta):
+func physics_update(delta) -> void:
 	previouspos = owner.position
 	#apply gravity
 	owner.velocity.y += owner.gravity * delta
@@ -34,5 +34,5 @@ func physics_update(delta):
 	if owner.position == previouspos:
 		state_machine.transition_to("Idle")
 
-func update(delta):
+func update(delta) -> void:
 	falltime += delta
